@@ -5,12 +5,14 @@ class Banking {
     private double balance;
     private int deposit;
     private int withdraw;
+    private int passcode;
 
-    public Banking(String username, double balance, int deposit, int withdraw) {
+    public Banking(String username, double balance, int deposit, int withdraw, int passcode) {
         this.username = username;
         this.balance = balance;
         this.deposit = deposit;
         this.withdraw = withdraw;
+        this.passcode = passcode;
     }
 
     // getters
@@ -30,6 +32,10 @@ class Banking {
         return this.withdraw;
     }
 
+    public int getPasscode() {
+        return this.passcode;
+    }
+
     // end of getters
     // setters
     public void setUsername(String newUsername) {
@@ -47,40 +53,40 @@ class Banking {
     public void setWithdraw(int newWithdraw) {
         this.withdraw = newWithdraw;
     }
+
+    public void setPasscode(int newPasscode) {
+        this.passcode = newPasscode;
+    }
     // end of setters
 }
 
 public class GettersSetters {
     public static void main(String[] args) {
-        Banking anonymusRhino = new Banking("Anonymus", 150.00, 0, 0);
+        Banking anonymusRhino = new Banking("Harold Arriola", 150.00, 0, 0, 15476);
 
         Scanner keyboard = new Scanner(System.in);
-
-        System.out.println("Enter a username");
-        String inUsername = keyboard.nextLine();
-        anonymusRhino.setUsername(inUsername);
-
-        System.out.println("Would you like to Deposit or Withdraw? Yes or No");
-        String yes = "Yes";
-        String no = "No";
-        yes = keyboard.nextLine();
-        no = keyboard.nextLine();
-
-        if (keyboard.equals(yes)) {
-            System.out.println("Enter an amount to deposit.. Machine cannot take any cents.");
-            int inDeposit = keyboard.nextInt();
-            anonymusRhino.setDeposit(inDeposit);
-            System.out.println("Enter an amount to withdraw.. Machine cannot dispense cents.");
-            int inWithdraw = keyboard.nextInt();
-            anonymusRhino.setWithdraw(inWithdraw);
-
-            System.out.println("Username Entered: " + anonymusRhino.getUsername());
-            System.out.println(anonymusRhino.getUsername() + "Deposited: " + anonymusRhino.getDeposit());
-            System.out.println(anonymusRhino.getUsername() + "Withdrew: " + anonymusRhino.getWithdraw());
-            System.out.println(anonymusRhino.getUsername() + "'s " + "Current Balance: " + anonymusRhino.getBalance());
-        } else if (keyboard.equals(no)) {
-            System.out.println("Username Entered: " + anonymusRhino.getUsername());
-            System.out.println(anonymusRhino.getUsername() + "'s " + "Current Balance: " + anonymusRhino.getBalance());
+        System.out.println("Enter passcode: ");
+        int inPasscode = keyboard.nextInt();
+        if (inPasscode == anonymusRhino.getPasscode()) {
+            // asks for a deposit
+            double currentBalance = anonymusRhino.getBalance();
+            System.out.printf("Your Current Balance: " + "%.2f", currentBalance);
+            System.out.println("\n");
+            System.out.println("How much would you like to Deposit?");
+            double depositAmount = keyboard.nextDouble();
+            // asks for a withdraw
+            System.out.println("How much would you like to Withdraw");
+            double withdrawAmount = keyboard.nextDouble();
+            // calculating the total amount
+            double totalBalance = (double) ((anonymusRhino.getBalance()) + (depositAmount - withdrawAmount));
+            System.out.println("Passcode Entered: " + inPasscode);
+            System.out.printf("Amount Deposited: " + "%.2f", depositAmount);
+            System.out.println("\n");
+            System.out.printf("Withdraw Amount: " + "%.2f", withdrawAmount);
+            System.out.println("\n");
+            System.out.printf("Your total balance is now: " + "\n" + "%.2f", totalBalance);
+        } else {
+            System.out.println("ERROR: Username is not Recognized");
         }
     }
 }
